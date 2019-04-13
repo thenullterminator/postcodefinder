@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Post Code Finder</title>
+    <style type="text/css">
+    @import url('https://fonts.googleapis.com/css?family=Montserrat');
+    form 
+    {
+      width:700px;
+      margin:100px auto;
+      font-size:2rem;
+    }
+    body{
+      font-family: 'Montserrat', sans-serif;
+    }
+    h1
+    {
+      font-weight:bold;
+    }
+    button{
+      font-size:1.5rem !important;
+      }
+    input{
+      height:50px;
+      font-size:1.5rem !important;}
+    </style>
+  </head>
+  <body>
+    
+
+    <form method="POST">
+        <h1>Find your Post code here</h1>
+        <p></p>
+        <div id="error"></div>
+        
+        <p></p><br>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Address(Partial will work)</label>
+          <p></p>
+          <input type="text" class="form-control" id="add" aria-describedby="emailHelp" placeholder="Enter Address">
+        </div>
+        
+        <p></p><br>
+        <button type="submit" class="btn btn-primary">Submit!</button>
+      </form>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+    <script type="text/javaScript">
+
+   
+    $("form").submit(function()
+    {
+      var error="";
+      if($("#add").val()=="")
+      {
+        error+=" Address is required";
+      }
+      if(error!='')
+      {
+         $("#error").html('<div class="alert alert-warning" role="alert" style="font-size:1.3rem;" ><p>'+error+'</p></div>');
+        return false;
+      }
+      else
+      {
+        var add=encodeURI($("#add").val());
+      
+        $.ajax({
+        url:"https://maps.googleapis.com/maps/api/geocode/json?address="+add+"&key=AIzaSyBBCqFoUFtgoCgz7SDP1d---9NL3C8jXW0",
+        type:"GET",
+        success:function(data){
+
+          console.log(data);
+          // $.each(data["results"][0]["address_components"],function(key,value)
+          // {
+          //     if(value["types"][0]=='postal_code')
+          //     {
+          //       $("#error").html('<div class="alert alert-success" role="alert" style="font-size:1.3rem;" ><p> PINCODE:'+value['long_name']+'<br> Thank You! For using :) </p></div>');
+          //       break;
+          //     }
+          // });
+
+
+        }
+        });
+
+        return false;
+          
+      }
+
+    });
+    </script>
+  
+  </body>
+</html>
